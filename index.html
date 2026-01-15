@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joyeux Anniversaire!</title>
+    <title>Joyeux Anniversaire Maman</title>
     <style>
         * {
             margin: 0;
@@ -12,404 +12,330 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: 'Georgia', serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
             position: relative;
-            padding: 20px;
         }
 
-        /* Écran d'accueil avec cadeau */
-        .welcome-screen {
-            text-align: center;
-            z-index: 100;
-            animation: fadeIn 1s ease-out;
-        }
-
-        .gift-box {
-            font-size: 120px;
-            animation: giftShake 2s ease-in-out infinite;
-            cursor: pointer;
-            transition: transform 0.3s;
-            display: inline-block;
-        }
-
-        .gift-box:active {
-            transform: scale(0.95);
-        }
-
-        .welcome-text {
-            font-size: 24px;
-            color: #fff;
-            margin-top: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            padding: 0 20px;
-            line-height: 1.4;
-        }
-
-        .tap-instruction {
-            font-size: 18px;
-            color: #ffd700;
-            margin-top: 30px;
-            padding: 15px 30px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 30px;
-            display: inline-block;
-            animation: pulse 2s infinite;
-        }
-
-        /* Écran principal (caché au début) */
-        .birthday-screen {
-            display: none;
+        .container {
             text-align: center;
             z-index: 10;
-            animation: fadeInScale 1.5s ease-out;
-            padding: 20px;
-            width: 100%;
-            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 60px 80px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            animation: fadeIn 1s ease-in;
         }
 
-        .birthday-screen.active {
-            display: block;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h1 {
-            font-size: 32px;
-            color: #fff;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-            margin-bottom: 15px;
-            animation: bounce 2s infinite;
-            line-height: 1.2;
+            font-size: 3.5em;
+            color: #764ba2;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
         }
 
         .subtitle {
-            font-size: 18px;
-            color: #ffd700;
-            margin-bottom: 20px;
-            animation: pulse 2s infinite;
+            font-size: 1.5em;
+            color: #555;
+            margin-bottom: 40px;
+            font-style: italic;
         }
 
-        .cake {
-            font-size: 80px;
-            animation: rotate 3s ease-in-out infinite;
-            display: inline-block;
-            margin: 10px 0;
+        .play-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin-top: 20px;
         }
 
-        /* Teckel animé */
-        .dachshund-container {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 150px;
-            pointer-events: none;
-            z-index: 50;
+        .play-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
         }
 
-        .dachshund {
-            position: absolute;
-            font-size: 60px;
-            bottom: 20px;
-            animation: walkDog 8s linear infinite;
-            transform: scaleX(1);
+        .play-button:active {
+            transform: translateY(-2px);
         }
 
-        .dachshund.reverse {
-            animation: walkDogReverse 8s linear infinite;
-            transform: scaleX(-1);
+        .heart {
+            color: #f5576c;
+            font-size: 2em;
+            margin: 20px 0;
+            animation: heartbeat 1.5s ease-in-out infinite;
         }
 
-        .jumping-dachshund {
-            position: absolute;
-            font-size: 50px;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: jumpDog 1.5s ease-in-out infinite;
-            display: none;
-        }
-
-        .jumping-dachshund.active {
-            display: block;
-        }
-
-        /* Ballons flottants */
-        .balloon {
-            position: fixed;
-            width: 40px;
-            height: 55px;
-            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .balloon:before {
-            content: '';
-            position: absolute;
-            width: 2px;
-            height: 60px;
-            background: rgba(255,255,255,0.3);
-            top: 55px;
-            left: 50%;
-        }
-
-        .balloon:nth-child(1) { left: 10%; background: #ff6b6b; animation-delay: 0s; }
-        .balloon:nth-child(2) { left: 30%; background: #4ecdc4; animation-delay: 1s; }
-        .balloon:nth-child(3) { left: 50%; background: #ffe66d; animation-delay: 2s; }
-        .balloon:nth-child(4) { left: 70%; background: #a8e6cf; animation-delay: 1.5s; }
-        .balloon:nth-child(5) { left: 90%; background: #ff8b94; animation-delay: 0.5s; }
-
-        /* Confettis */
-        .confetti {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            background: #ffd700;
-            animation: confettiFall 3s linear infinite;
-        }
-
-        .confetti:nth-child(odd) { background: #ff6b6b; }
-        .confetti:nth-child(3n) { background: #4ecdc4; }
-
-        .stars {
-            position: fixed;
-            font-size: 24px;
-            animation: twinkle 1.5s infinite;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInScale {
-            0% {
-                opacity: 0;
-                transform: scale(0.5);
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
             }
-            100% {
-                opacity: 1;
+            25% {
+                transform: scale(1.2);
+            }
+            50% {
                 transform: scale(1);
             }
         }
 
-        @keyframes giftShake {
-            0%, 100% { transform: rotate(0deg); }
-            10%, 30%, 50%, 70%, 90% { transform: rotate(-10deg); }
-            20%, 40%, 60%, 80% { transform: rotate(10deg); }
+        /* Animation des teckels */
+        .teckel {
+            position: absolute;
+            font-size: 3em;
+            animation-duration: 8s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+            opacity: 0;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        .teckel.active {
+            opacity: 1;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.05); }
-        }
-
-        @keyframes rotate {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-10deg); }
-            75% { transform: rotate(10deg); }
-        }
-
-        @keyframes walkDog {
+        @keyframes moveTeckel1 {
             0% {
                 left: -100px;
+                top: 20%;
+                transform: rotate(0deg);
             }
             100% {
                 left: 110%;
+                top: 25%;
+                transform: rotate(360deg);
             }
         }
 
-        @keyframes walkDogReverse {
+        @keyframes moveTeckel2 {
+            0% {
+                left: -100px;
+                top: 50%;
+                transform: rotate(0deg) scaleX(-1);
+            }
+            100% {
+                left: 110%;
+                top: 55%;
+                transform: rotate(-360deg) scaleX(-1);
+            }
+        }
+
+        @keyframes moveTeckel3 {
+            0% {
+                left: -100px;
+                top: 75%;
+                transform: rotate(0deg);
+            }
+            100% {
+                left: 110%;
+                top: 70%;
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes moveTeckel4 {
             0% {
                 right: -100px;
+                top: 30%;
+                transform: rotate(0deg) scaleX(-1);
             }
             100% {
                 right: 110%;
+                top: 35%;
+                transform: rotate(-360deg) scaleX(-1);
             }
         }
 
-        @keyframes jumpDog {
-            0%, 100% {
-                bottom: 20px;
+        @keyframes moveTeckel5 {
+            0% {
+                left: -100px;
+                top: 60%;
+                transform: rotate(0deg);
             }
-            50% {
-                bottom: 80px;
+            100% {
+                left: 110%;
+                top: 65%;
+                transform: rotate(360deg);
             }
         }
 
-        @keyframes float {
-            0%, 100% { 
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { 
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
-            }
+        .teckel1 { animation-name: moveTeckel1; animation-delay: 0s; }
+        .teckel2 { animation-name: moveTeckel2; animation-delay: 2s; }
+        .teckel3 { animation-name: moveTeckel3; animation-delay: 4s; }
+        .teckel4 { animation-name: moveTeckel4; animation-delay: 1s; }
+        .teckel5 { animation-name: moveTeckel5; animation-delay: 3s; }
+
+        /* Confettis */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #f5576c;
+            opacity: 0;
+        }
+
+        .confetti.active {
+            animation: confettiFall 3s ease-out forwards;
         }
 
         @keyframes confettiFall {
             0% {
-                transform: translateY(-100px) rotate(0deg);
                 opacity: 1;
+                transform: translateY(0) rotate(0deg);
             }
             100% {
-                transform: translateY(100vh) rotate(720deg);
                 opacity: 0;
+                transform: translateY(100vh) rotate(720deg);
             }
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; transform: scale(0); }
-            50% { opacity: 1; transform: scale(1.2); }
+        .message {
+            font-size: 1.1em;
+            color: #666;
+            margin-top: 30px;
+            line-height: 1.6;
         }
 
-        /* Responsive optimisations */
-        @media (max-width: 480px) {
-            h1 { font-size: 28px; }
-            .subtitle { font-size: 16px; }
-            .cake { font-size: 70px; }
-            .gift-box { font-size: 100px; }
-            .welcome-text { font-size: 20px; }
-            .tap-instruction { font-size: 16px; padding: 12px 25px; }
-            .dachshund { font-size: 50px; }
-            .jumping-dachshund { font-size: 40px; }
-        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 30px;
+                margin: 20px;
+            }
 
-        @media (max-width: 360px) {
-            h1 { font-size: 24px; }
-            .cake { font-size: 60px; }
-            .gift-box { font-size: 80px; }
-            .welcome-text { font-size: 18px; }
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .subtitle {
+                font-size: 1.2em;
+            }
+
+            .play-button {
+                padding: 15px 35px;
+                font-size: 1.1em;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Écran d'accueil -->
-    <div class="welcome-screen" id="welcomeScreen">
-        <div class="gift-box" id="giftBox">🎁</div>
-        <div class="welcome-text">Un cadeau spécial t'attend!</div>
-        <div class="tap-instruction">👆 Ouvre ton cadeau en cliquant ici 👆</div>
-    </div>
+    <div class="container">
+        <h1>🎉 Joyeux Anniversaire Maman! 🎉</h1>
+        <div class="heart">❤️</div>
+        <p class="subtitle">Une journée spéciale pour une maman exceptionnelle</p>
 
-    <!-- Écran d'anniversaire -->
-    <div class="birthday-screen" id="birthdayScreen">
-        <h1>🎉 Joyeux Anniversaire! 🎉</h1>
-        <p class="subtitle">✨ Que cette journée soit magique ✨</p>
-        <div class="cake">🎂</div>
+        <button class="play-button" onclick="playAudio()">
+            🎵 Lancer la surprise 🎵
+        </button>
+
+        <p class="message">
+            Que cette nouvelle année t'apporte joie, bonheur et santé.<br>
+            Tu es la meilleure maman du monde!
+        </p>
     </div>
 
     <!-- Teckels animés -->
-    <div class="dachshund-container">
-        <div class="dachshund">🐕</div>
-        <div class="dachshund reverse" style="animation-delay: 4s;">🐕</div>
-        <div class="jumping-dachshund" id="jumpingDog">🐕</div>
-    </div>
-
-    <!-- Audio depuis Google Drive -->
-    <!-- Remplace YOUR_FILE_ID par l'ID de ton fichier Google Drive -->
-    <audio id="birthdayAudio" loop>
-        <source src="https://drive.google.com/uc?export=download&id=YOUR_FILE_ID" type="audio/mpeg">
-    </audio>
+    <div class="teckel teckel1">🐕</div>
+    <div class="teckel teckel2">🐕</div>
+    <div class="teckel teckel3">🐕</div>
+    <div class="teckel teckel4">🐕</div>
+    <div class="teckel teckel5">🐕</div>
 
     <script>
-        const welcomeScreen = document.getElementById('welcomeScreen');
-        const birthdayScreen = document.getElementById('birthdayScreen');
-        const giftBox = document.getElementById('giftBox');
-        const audio = document.getElementById('birthdayAudio');
-        const jumpingDog = document.getElementById('jumpingDog');
+        // Remplacez 'YOUR_GOOGLE_DRIVE_FILE_ID' par l'ID de votre fichier audio
+        // Pour obtenir l'ID: ouvrez le fichier sur Google Drive, 
+        // l'URL ressemble à: https://drive.google.com/file/d/FILE_ID/view
+        const GOOGLE_DRIVE_FILE_ID = '1e7wIScOqg09VLUhvqL5Qp1a4iEuC_7Xv';
 
-        // Création des confettis
-        function createConfetti() {
-            for (let i = 0; i < 40; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.animationDelay = Math.random() * 3 + 's';
-                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                document.body.appendChild(confetti);
+        let audio;
+        let animationStarted = false;
+
+        function playAudio() {
+            // URL pour lire directement depuis Google Drive
+            const audioUrl = `https://drive.google.com/uc?export=download&id=${GOOGLE_DRIVE_FILE_ID}`;
+
+            if (!audio) {
+                audio = new Audio(audioUrl);
+            }
+
+            audio.play();
+
+            if (!animationStarted) {
+                startAnimation();
+                animationStarted = true;
             }
         }
 
-        // Création des étoiles
-        function createStars() {
-            const positions = [
-                {top: '10%', left: '15%'},
-                {top: '20%', left: '85%'},
-                {top: '70%', left: '10%'},
-                {top: '60%', left: '90%'}
-            ];
-
-            positions.forEach((pos, i) => {
-                const star = document.createElement('div');
-                star.className = 'stars';
-                star.innerHTML = '⭐';
-                star.style.top = pos.top;
-                star.style.left = pos.left;
-                star.style.animationDelay = (i * 0.3) + 's';
-                document.body.appendChild(star);
+        function startAnimation() {
+            // Activer les teckels
+            const teckels = document.querySelectorAll('.teckel');
+            teckels.forEach(teckel => {
+                teckel.classList.add('active');
             });
+
+            // Créer des confettis
+            createConfetti();
         }
 
-        // Création des ballons
-        function createBalloons() {
-            for (let i = 0; i < 5; i++) {
-                const balloon = document.createElement('div');
-                balloon.className = 'balloon';
-                balloon.style.left = (i * 20 + 10) + '%';
-                balloon.style.animationDelay = (i * 0.5) + 's';
-                const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#a8e6cf', '#ff8b94'];
-                balloon.style.background = colors[i];
-                document.body.appendChild(balloon);
+        function createConfetti() {
+            const colors = ['#f5576c', '#f093fb', '#667eea', '#764ba2', '#ffd700', '#ff69b4'];
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+                    confetti.style.height = (Math.random() * 10 + 5) + 'px';
+                    document.body.appendChild(confetti);
+
+                    setTimeout(() => {
+                        confetti.classList.add('active');
+                    }, 10);
+
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }, i * 50);
             }
         }
 
-        // Ouverture du cadeau
-        giftBox.addEventListener('click', function() {
-            // Masquer l'écran d'accueil
-            welcomeScreen.style.animation = 'fadeInScale 0.5s ease-out reverse';
-            setTimeout(() => {
-                welcomeScreen.style.display = 'none';
-            }, 500);
-
-            // Afficher l'écran d'anniversaire
-            setTimeout(() => {
-                birthdayScreen.classList.add('active');
-                jumpingDog.classList.add('active');
-
-                // Créer les animations
+        // Animation automatique des confettis toutes les 10 secondes
+        setInterval(() => {
+            if (animationStarted) {
                 createConfetti();
-                createStars();
-                createBalloons();
-
-                // Lancer l'audio
-                audio.play().catch(error => {
-                    console.log('Lecture audio:', error);
-                    // Réessayer après interaction utilisateur
-                    document.body.addEventListener('click', function playRetry() {
-                        audio.play();
-                        document.body.removeEventListener('click', playRetry);
-                    }, { once: true });
-                });
-            }, 600);
-        });
-
-        // Support du touch sur mobile
-        giftBox.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            giftBox.click();
-        });
+            }
+        }, 10000);
     </script>
 </body>
 </html>
