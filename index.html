@@ -270,18 +270,14 @@
     <div class="teckel teckel5">🐕</div>
 
     <script>
-        // Remplacez 'YOUR_GOOGLE_DRIVE_FILE_ID' par l'ID de votre fichier audio
-        // Pour obtenir l'ID: ouvrez le fichier sur Google Drive, 
-        // l'URL ressemble à: https://drive.google.com/file/d/FILE_ID/view
-        const GOOGLE_DRIVE_FILE_ID = '1e7wIScOqg09VLUhvqL5Qp1a4iEuC_7Xv';
+        // Mettez votre fichier audio dans le même dossier que ce HTML
+        // et changez le nom du fichier ci-dessous
+        const audioUrl = 'audio.mp3'; // ⬅️ CHANGEZ CE NOM selon votre fichier
 
         let audio;
         let animationStarted = false;
 
         function playAudio() {
-            // URL pour lire directement depuis Google Drive
-            const audioUrl = `https://drive.google.com/uc?export=download&id=${GOOGLE_DRIVE_FILE_ID}`;
-
             if (!audio) {
                 audio = new Audio(audioUrl);
             }
